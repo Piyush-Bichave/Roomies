@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roomies</title>
+
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <!-- css file -->
+  <link rel="stylesheet" href="css/styles.css">
+  <!--    Google fonts-->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,900|Ubuntu:400,700&display=swap" rel="stylesheet">
+  <!-- fontawesome -->
+  <script defer src="https://kit.fontawesome.com/e87d687bba.js"></script>
+  <script src="https://kit.fontawesome.com/165442e16c.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+  <section id="title">
+
+    <div class="container-fluid" style="padding-bottom: 0px;">
+      <!-- Nav Bar -->
+      <nav class="navbar navbar-expand-lg ">
+        <a class="navbar-brand text-light">Roomies</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+          <ul class="navbar-nav ms-auto nav-pills">
+            <li class="menu3 nav-item">
+              <a class="nav-link text-light" href="#footer">Contact</a>
+            </li>
+            <li class="menu3 nav-item">
+              <a class="nav-link text-light"><button id="filterButton">Filter</button>
+                <select id="priceFilter" style="display: none;">
+                  <option value="1000-2000">1000 - 2000</option>
+                  <option value="2000-3000">2000 - 3000</option>
+                  <option value="3000-4000">3000 - 4000</option>
+                </select>
+              </a>
+            </li>
+            {{!-- <li class="menu3 nav-item">
+              <a class="nav-link text-light" href="/logout">LogOut</a>
+            </li> --}}
+            <li class="menu3 nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+
+                <img src="./images/demoprofile.png" alt="User Profile" width="50" height="50" class="rounded-circle">
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item">{{UserData.name}}</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/logout">Log Out</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+
+
+      <div class="container">
+        <div class="row height d-flex justify-content-center align-items-center">
+          <div class="col-md-6">
+
+            {{!-- <div class="form">
+              <i class="fa fa-search"></i>
+              <input type="text" class="form-control form-input" placeholder="Find Rooms near me">
+              <span class="left-pan"><i class="fa fa-microphone"></i></span>
+            </div> --}}
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- Roomms -->
+
+  <section id="rooms">
+
+    <div class="row">
+      
+
+      {{#each rooms}}
+      <div class="images-container col-lg-3 col-md-4">
+        <p class="roomname">{{ UserData.name }}</p>
+        <img class="room-img" src="{{ this.imageUrl }}">
+        <p class="room-name">{{this.name}}</p>
+        <p class="room-description">{{this.description}}</p>
+        {{!-- <p class="room-description">Room of 4 students</p> --}}
+        <h5 class="room-rent">₹{{this.price}} /month</h5>
+
+        <button onclick="selectRoom('{{ UserData }}' , '{{ this._id }}')">Select Room</button>
+
+
+      </div>
+      {{/each}}
+    </div>
+
+  </section>
+
+
+
+
+
+  <!-- Pricing -->
+
+  <section id="pricing" class="text-center pricing-student">
+
+
+    <h3 class="pricing-heading">A Plan for Every Student's Need</h3>
+    <h5 style="color: #f8f9fa;">Simple and Affordable price plans for you.</h5>
+
+
+    <div class=" row">
+
+      <div class="pricing-column col-lg-4 col-md-6">
+        <div class="card text-center pricing-card">
+          <div class="card-header">
+            <h3>One Time</h3>
+          </div>
+          <div class="card-body">
+            <h2>120 ₹</h2>
+            <p>5 Matches Per Day</p>
+            <p>10 Messages Per Day</p>
+            <p>Unlimited App Usage</p>
+            {{!-- <button class="btn btn-lg btn-block btn-outline-dark col-12" type="button">Sign Up</button> --}}
+          </div>
+        </div>
+      </div>
+
+      <div class="pricing-column col-lg-4 col-md-6">
+        <div class="card text-center pricing-card">
+          <div class="card-header">
+            <h3>Monthly</h3>
+          </div>
+          <div class="card-body">
+            <h2>10₹ / mo</h2>
+            <p>Unlimited Matches</p>
+            <p>Unlimited Messages</p>
+            <p>Unlimited App Usage</p>
+            {{!-- <button class="btn btn-lg btn-block btn-dark col-12" type="button">Sign Up</button> --}}
+          </div>
+        </div>
+      </div>
+
+      <div class="pricing-column col-lg-4 col-md-12">
+        <div class="card text-center pricing-card">
+          <div class="card-header">
+            <h3>Yearly</h3>
+          </div>
+          <div class="card-body">
+            <h2>100₹ / yr</h2>
+            <p>Pirority Listing</p>
+            <p>Unlimited Matches</p>
+            <p>Unlimited Messages</p>
+            <p>Unlimited App Usage</p>
+            {{!-- <button class="btn btn-lg btn-block btn-dark col-12" type="button">Sign Up</button> --}}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+
+  <!-- Footer -->
+
+  <footer id="footer">
+
+    <a href=""></a>
+    <p>© Copyright 2022.</p>
+
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+
+  <script>
+    function selectRoom(userData, roomId) {
+      alert("Room select successfully");
+
+      fetch('/room-selection', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userData, roomId })
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Handle the response data here
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
+  </script>
+
+
+    <script>
+      
+
+    
+     
+
+    
+
+    </script>
+
+  </body>
+
+  </html>
