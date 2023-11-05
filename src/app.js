@@ -27,14 +27,13 @@ app.use(
 );
 
 const otpStorage = {
-  _otp: '', // Private variable to store the OTP
+  _otp: '', 
 
   get otp() {
     return this._otp;
   },
 
   set otp(newOTP) {
-    // You can add validation or other logic here if needed
     this._otp = newOTP;
   }
 };
@@ -58,6 +57,24 @@ app.get("/register", (req, res) => {
   res.render("register");
 });
 
+app.get("/filter", async (req, res) => {
+  const { max, min, all } = req.query; 
+  let query = {};
+
+  if (min && max) {
+    const minPrice = parseInt(min);
+    const maxPrice = parseInt(max);
+    query = { price: { $gte: minPrice, $lte: maxPrice } };
+  }
+
+  try {
+    const rooms = await Room.find(query);
+    res.render("student", { rooms });
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 app.post("/register", async (req, res) => {
   try {
     const { name, phoneNumber, email, password } = req.body;
@@ -70,11 +87,11 @@ app.post("/register", async (req, res) => {
       password: hashedPassword,
     });
 
-    const otp = otpGenerator.generate(6, {lowerCaseAlphabets:false, upperCaseAlphabets:false, upperCase: false, specialChars: false });
-    otpStorage.otp=otp;
+    const otp = otpGenerator.generate(6, { lowerCaseAlphabets: false, upperCaseAlphabets: false, upperCase: false, specialChars: false });
+    otpStorage.otp = otp;
     console.log(otpStorage.otp);
     await registerEmployee.save();
-    
+
     const emailBody = `Your One Time Password (OTP) is ${otp}`;
     await mailSender(email, "Verification Mail", emailBody);
 

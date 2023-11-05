@@ -44,13 +44,27 @@
               <a class="nav-link text-light" href="#footer">Contact</a>
             </li>
             <li class="menu3 nav-item">
-              <a class="nav-link text-light"><button id="filterButton">Filter</button>
-                <select id="priceFilter" style="display: none;">
-                  <option value="1000-2000">1000 - 2000</option>
-                  <option value="2000-3000">2000 - 3000</option>
-                  <option value="3000-4000">3000 - 4000</option>
-                </select>
-              </a>
+              <div class="nav-item dropdown">
+                <a class="nav-link text-light dropdown-toggle" id="filterDropdown" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Price
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+                  <li>
+                    <a class="dropdown-item" href="/student">All</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/filter?min=1000&max=2000">1000 - 2000</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/filter?min=2000&max=3000">2000 - 3000</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/filter?min=3000&max=4000">3000 - 4000</a>
+                  </li>
+                </ul>
+              </div>
+
             </li>
             {{!-- <li class="menu3 nav-item">
               <a class="nav-link text-light" href="/logout">LogOut</a>
@@ -100,7 +114,7 @@
   <section id="rooms">
 
     <div class="row">
-      
+
 
       {{#each rooms}}
       <div class="images-container col-lg-3 col-md-4">
@@ -222,16 +236,30 @@
   </script>
 
 
-    <script>
-      
+  <script>
+    const filterButton = document.getElementById('filterButton');
+    const priceFilter = document.getElementById('priceFilter');
 
-    
-     
+    // Toggle visibility of the price filter dropdown
+    filterButton.addEventListener('click', function () {
+      priceFilter.style.display = priceFilter.style.display === 'none' ? 'block' : 'none';
+    });
 
-    
+    // Add event listeners to each option
+    priceFilter.addEventListener('change', function () {
+      const selectedPriceRange = priceFilter.value;
+      // Redirect to the filter route based on the selected option
+      if (selectedPriceRange === '1000-2000') {
+        window.location.href = '/filter?min=1000&max=2000';
+      } else if (selectedPriceRange === '2000-3000') {
+        window.location.href = '/filter?min=2000&max=3000';
+      } else if (selectedPriceRange === '3000-4000') {
+        window.location.href = '/filter?min=3000&max=4000';
+      }
+    });
+  </script>
 
-    </script>
 
-  </body>
+</body>
 
-  </html>
+</html>
